@@ -28,10 +28,19 @@
 
         </p:dataGrid>
 
-        <p:commandButton actionListener="#{asistenciaBean.iniciovotar}"
-          value="Inicio Votacion" />
+        <p:commandButton actionListener="#{asistenciaBean.iniciovotar}"    value="Inicio Votacion" />
 
+        
+        
       </p:panel>
+      
+      <p:panel>
+        <f:facet name="header">
+              Ir Sitio Movil
+        </f:facet> 
+      <p:graphicImage value="http://www.codigos-qr.com/qr/php/qr_img.php?d=#{asistenciaBean.realPath()}/mlogin.jsf">
+        </p:graphicImage>
+      </p:panel> 
 
       <p:socket onMessage="handleMessage" channel="/asistencia" />
       <p:remoteCommand name="handleMessage" update="lista" />

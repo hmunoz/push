@@ -3,6 +3,10 @@ package unrn.isiii.bean;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
 import org.slf4j.Logger;
@@ -101,4 +105,9 @@ public class AsistenciaBean {
 		countNo++;
 	}
 
+public String realPath(){
+  HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+  return request.getRequestURL().toString().substring(0, request.getRequestURL().toString().length() - 9);
+
+}
 }

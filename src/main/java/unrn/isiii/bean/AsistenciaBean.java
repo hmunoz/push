@@ -82,7 +82,10 @@ public class AsistenciaBean {
 	public void iniciovotar() {
 		PushContext pushContext = PushContextFactory.getDefault()
 				.getPushContext();
-
+		setCountVotaron(0);
+		setCountNo(0);
+		setCountSi(0);
+		
 		for (String usuario : getPresentes()) {
 			pushContext.push("/" + usuario, "");
 		}
@@ -104,6 +107,7 @@ public class AsistenciaBean {
 	public synchronized void votarNo(){
 		countNo++;
 	}
+
 
 public String realPath(){
   HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();

@@ -6,7 +6,7 @@
   xmlns:p="http://primefaces.org/ui"
   template="/WEB-INF/templates/template.xhtml">
 
-  
+
   <ui:define name="content">
     <h1>
       <h:outputText value="#{messages['wellcome.title']}" />
@@ -16,7 +16,8 @@
       <p:growl id="growl" showDetail="true" />
 
       <p:panel>
-        <p:dataGrid id="lista" var="v_user"     value="#{asistenciaBean.presentes}" columns="4">
+        <p:dataGrid id="lista" var="v_user"
+          value="#{asistenciaBean.presentes}" columns="4">
 
           <p:panel header="#{v_user}" style="text-align:center">
             <p:panelGrid columns="1" style="width:100%">
@@ -28,22 +29,35 @@
 
         </p:dataGrid>
 
-        <p:commandButton actionListener="#{asistenciaBean.iniciovotar}"    value="Inicio Votacion" />
+        <p:commandButton actionListener="#{asistenciaBean.iniciovotar}"
+          value="Inicio Votacion" />
 
-        
-        
+
+
+        <p:socket onMessage="handleMessage" channel="/asistencia" />
+        <p:remoteCommand name="handleMessage" update="lista" />
+
+        <p:socket onMessage="resultado" channel="/resultado" />
+
+        <p:growl widgetVar="gresultado" sticky="true" />
+
       </p:panel>
-      
+
       <p:panel>
         <f:facet name="header">
               Ir Sitio Movil
-        </f:facet> 
-      <p:graphicImage value="http://www.codigos-qr.com/qr/php/qr_img.php?d=#{asistenciaBean.realPath()}/mlogin.jsf">
+        </f:facet>
+        <p:graphicImage
+          value="http://www.codigos-qr.com/qr/php/qr_img.php?d=#{asistenciaBean.realPath()}/mlogin.jsf">
         </p:graphicImage>
-      </p:panel> 
+      </p:panel>
 
-      <p:socket onMessage="handleMessage" channel="/asistencia" />
-      <p:remoteCommand name="handleMessage" update="lista" />
+
+      <script>
+        function resultado(data) {
+          gresultado.renderMessage({summary:'Resultado Votacion', detail: data, severity: 0});
+        }
+      </script>
     </h:form>
 
   </ui:define>

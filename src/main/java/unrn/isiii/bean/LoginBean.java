@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+
 @Component("loginBean")
 @Scope("session")
 public class LoginBean {
@@ -49,7 +50,7 @@ public class LoginBean {
 		pushContext.push("/usuario", getUsername());
 	}
 
-	public synchronized void increment(Boolean valor) {
+	public synchronized void votar(Boolean valor) {
 
 		getAsistenciaBean().votar();
 		if (valor) {
@@ -62,9 +63,10 @@ public class LoginBean {
 				.getPushContext();
 		pushContext.push("/wait" + getUsername(), "");
 
-		if (getAsistenciaBean().votaronTodos())
-			pushContext.push("/resultado", getAsistenciaBean()
-					.getCountVotaron());
+		if (getAsistenciaBean().votaronTodos()){
+			pushContext.push("/resultado", getAsistenciaBean().getCountSi() + "/" +getAsistenciaBean().getCountNo());
+		}
+			
 
 	}
 
